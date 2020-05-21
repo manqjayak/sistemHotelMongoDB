@@ -56,10 +56,10 @@
                     <td> <?= $no ?></td>
                     <td><?= $daftar['namaKaryawan'] ?></td>
                     <td><?= $daftar['namaPengunjung'] ?></td>
-                    <td><?= $daftar['jumlah_kamar'] ?></td>
+                    <td><?= $daftar['jumlah_kamar']  ?> Kamar</td>
                     <td><?= $daftar['tanggal_masuk'] ?></td>
                     <td><?= $daftar['tanggal_keluar'] ?></td>
-                    <td><?= $daftar['lama_menginap'] ?></td>
+                    <td><?= $daftar['lama_menginap'] ?> Hari</td>
                     <td><?= $daftar['total_harga'] ?></td>
                     <td><span id="lihatKamar" data-id="<?= $daftar['no_transaksi'] ?>" class="badge-warning p-1" data-toggle="modal" data-target="#exampleModal" style="cursor:pointer">lihat</span></td>
                 </tr>
@@ -84,24 +84,7 @@
                 </button>
             </div>
             <div id="modal-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">No Kamar</th>
-                            <th scope="col">Jenis Kamar</th>
-                            <th scope="col">harga</th>
-                            <th scope="col">Handle</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                    </tbody>
-                </table>
+
             </div>
         </div>
     </div>

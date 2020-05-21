@@ -54,4 +54,21 @@ class Transaksi extends Controller
     </table>";
         echo $kata;
     }
+
+
+    public function riwayatTransaksi()
+    {
+
+        if (!$_POST || $_POST['tanggal'] == "") {
+            $data['riwayat'] = $this->model('Transaksi_model')->selectRiwayat();
+        } else {
+            $data['riwayat'] = $this->model('Transaksi_model')->cariBerdasarkanTanggal($_POST);
+        }
+
+        $data['judul'] = "Riwayat Transaksi";
+
+        $this->view('templates/headerhotel', $data);
+        $this->view('transaksi/riwayatTransaksi', $data);
+        $this->view('templates/footerhotel');
+    }
 }

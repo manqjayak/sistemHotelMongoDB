@@ -44,10 +44,12 @@ END //
 DELIMITER ;
 
 ------------------------------------------------
-SINGLE FUNCTION
-menampilkan PENGUNJUNG menggunaan UPPER CASE
-select UPPER(nama) as nama,alamat,jk,no_hp,no_ktp from pengunjung
-----------------------------------------------------------
+SINGLE FUNCTION(DONE) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+menampilkan PENGUNJUNG menggunaan UPPER CASE.
+select UPPER(nama) as nama,alamat,jk,no_hp,no_ktp from pengunjung;
+
+SELECT id_pengunjung, UPPER(nama) as nama, alamat, jk, no_hp, no_ktp FROM pengunjung;
+-------------------------------
 SORTING(DONE)XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 menampilkan transaksi yang total_harganya dari terbesar ke terkecil
 
@@ -57,18 +59,26 @@ INNER JOIN karyawan b on b.id_karyawan = a.id_karyawan
 INNER JOIN pengunjung c on c.id_pengunjung = a.id_pengunjung
 ORDER BY a.total_harga DESC
 -----------------------------------------
-VIEW
-menampilkan untuk pengunjung, berdasarkan tanggal.
-CREATE VIEW cekid AS
-      SELECT transaksi.id_pengunjung, tanggal_masuk, tanggal_keluar FROM transaksi
-      INNER JOIN pengunjung
-      ON transaksi.id_pengunjung=pengunjung.id_pengunjung;
+VIEW(DONE)XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 
+menampilkan untuk pengunjung beserta tanggal masuk dan keluarnya.
 
-SELECT * FROM cekid WHERE tanggal_masuk="2020-05-19";
+CREATE VIEW cekid AS SELECT
+   UPPER( pengunjung.nama) as nama,
+    pengunjung.alamat,
+    pengunjung.jk,
+    pengunjung.no_hp,
+    pengunjung.no_ktp,
+    transaksi.tanggal_masuk,
+    transaksi.tanggal_keluar
+FROM
+    transaksi
+INNER JOIN pengunjung ON transaksi.id_pengunjung = pengunjung.id_pengunjung;
+
 --------------------------------
-SUBQUERY
-menampilkan pengunjung berdasarkan id
-SELECT * FROM pengunjung where id_pengunjung = 1;
+SUBQUERY(DONE)XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+menampilkan pengunjung berdasarkan no ktp atau nama.
+
+("SELECT id_pengunjung, UPPER(nama) as nama, alamat, jk, no_hp, no_ktp FROM pengunjung WHERE (no_ktp = [keyword]) OR (`nama` LIKE '%[keyword]') ")
 -----------------------------------------------
 JOIN (DONE)XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 menampilakn detail transaksi yang terdapat pada procedure
@@ -97,6 +107,11 @@ MAX: mencari pembayaran kamar hotel terbesar
 MIN: untuk mencari pembayaran hotel terkecil
 ...........................................
 SUM : untuk menjumnlahkan transaksi keseluruhan
+
+---------------------------------------------
+TRIGGER 
+MASIH DIPIKIRKAN
+
 
 
 

@@ -27,4 +27,18 @@ class Transaksi_model
         $this->db->query('call tampilDetailTransaksi(' . $id . ')');
         return $this->db->resultSet();
     }
+
+    public function selectRiwayat()
+    {
+        $this->db->query('SELECT * FROM cekid');
+        return $this->db->resultSet();
+    }
+
+    public function cariBerdasarkanTanggal($data)
+    {
+
+        $this->db->query('SELECT * FROM cekid WHERE tanggal_masuk = :tanggal');
+        $this->db->bind('tanggal', $data['tanggal']);
+        return $this->db->resultSet();
+    }
 }
