@@ -109,26 +109,26 @@
                 <form method="POST" action="<?= BASEURL ?>pengunjung/tambah">
                     <div class="form-group">
                         <label for="nama">Nama</label>
-                        <input type="text" class="form-control" id="nama" name="nama" autocomplete="off">
+                        <input type="text" class="form-control" id="nama" name="nama" autocomplete="off" required="">
                     </div>
                     <div class="form-group">
                         <label for="alamat">Alamat</label>
-                        <input type="text" class="form-control" id="alamat" name="alamat" autocomplete="off">
+                        <input type="text" class="form-control" id="alamat" name="alamat" autocomplete="off" required="">
                     </div>
                     <div class="form-group">
                         <label for="jeniskelamin">Jenis Kelamin</label>
-                        <select class="form-control" id="jeniskelamin" name="jeniskelamin">
+                        <select class="form-control" id="jeniskelamin" name="jeniskelamin" required="">
                             <option value="laki-laki">Laki-Laki</option>
                             <option value="perempuan">Perempuan</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="nohp">No HP</label>
-                        <input type="text" class="form-control" id="NoHP" name="NoHP" autocomplete="off">
+                        <input type="text" class="form-control" required="" id="NoHP" name="NoHP" autocomplete="off">
                     </div>
                     <div class="form-group">
                         <label for="noKTP">NO KTP</label>
-                        <input type="text" class="form-control" id="noKTP" name="noKTP" placeholder="" autocomplete="off" min=1>
+                        <input type="text" class="form-control" required="" id="noKTP" name="noKTP" placeholder="" autocomplete="off" min=1>
                     </div>
 
             </div>

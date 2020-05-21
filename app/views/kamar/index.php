@@ -82,18 +82,18 @@
                 <form method="POST" action="<?= BASEURL ?>kamar/tambah">
                     <div class="form-group">
                         <label for="nokamar">No Kamar</label>
-                        <input type="text" class="form-control" id="nokamar" name="nokamar" autocomplete="off">
+                        <input type="text" class="form-control" id="nokamar" name="nokamar" autocomplete="off" required="">
                     </div>
                     <div class="form-group">
                         <label for="jeniskamar">Jenis Kamar</label>
-                        <select class="form-control" id="jeniskamar" name="jeniskamar">
+                        <select class="form-control" id="jeniskamar" name="jeniskamar" required="">
                             <option value="Standar room">Standar Room</option>
                             <option value="Superior room">Superior Room</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="harga">Harga</label>
-                        <input type="number" class="form-control" id="harga" name="harga" placeholder="" autocomplete="off" min=1>
+                        <input type="number" class="form-control" id="harga" name="harga" placeholder="" autocomplete="off" min=1 required="">
                     </div>
 
             </div>

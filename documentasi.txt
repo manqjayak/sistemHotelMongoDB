@@ -107,6 +107,11 @@ MAX: mencari pembayaran kamar hotel terbesar
 MIN: untuk mencari pembayaran hotel terkecil
 ...........................................
 SUM : untuk menjumnlahkan transaksi keseluruhan
+---------------------------------------------------
+(DONE)xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+COUNT: untuk menghitung jumlah pengunjung sebagai tanda apakah pengunjung sudah pernah terdaftar
+
+SELECT COUNT (*) as banyak FROM pengunjung;
 
 ---------------------------------------------
 TRIGGER 

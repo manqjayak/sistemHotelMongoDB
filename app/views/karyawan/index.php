@@ -86,26 +86,26 @@
                 <form method="POST" action="<?= BASEURL ?>karyawan/tambah">
                     <div class="form-group">
                         <label for="idkaryawan">ID karyawan</label>
-                        <input type="text" class="form-control" id="idkaryawan" name="idkaryawan" autocomplete="off">
+                        <input type="text" class="form-control" id="idkaryawan" name="idkaryawan" autocomplete="off" required="">
                     </div>
                     <div class="form-group">
                         <label for="nama">Nama Lengkap</label>
-                        <input type="text" class="form-control" id="nama" name="nama" autocomplete="off">
+                        <input type="text" class="form-control" id="nama" name="nama" autocomplete="off" required="">
                     </div>
                     <div class="form-group">
                         <label for="jeniskelamin">Jenis Kelamin</label>
-                        <select class="form-control" id="jeniskelamin" name="jeniskelamin">
+                        <select class="form-control" id="jeniskelamin" name="jeniskelamin " required="">
                             <option value="laki-laki">Laki-Laki</option>
                             <option value="perempuan">Perempuan</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="alamat">Alamat</label>
-                        <input type="text" class="form-control" id="alamat" name="alamat" autocomplete="off">
+                        <input type="text" class="form-control" id="alamat" name="alamat" autocomplete="off" required="">
                     </div>
                     <div class="form-group">
                         <label for="notlp">No HP</label>
-                        <input type="text" class="form-control" id="notlp" name="notlp" placeholder="" autocomplete="off" min=1>
+                        <input type="text" class="form-control" id="notlp" name="notlp" placeholder="" autocomplete="off" min=1 required="">
                     </div>
 
             </div>

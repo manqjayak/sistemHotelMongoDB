@@ -212,6 +212,27 @@
 
     })
     // end transakasi lihat kamar
+
+    // transaksi
+    $(document).on('click', '#cekButton', function() {
+        let noktp = $(this).parent().siblings('#noktp').val()
+        cekktp(noktp)
+    })
+
+    function cekktp(noktp) {
+        $.ajax({
+            url: "<?= BASEURL ?>transaksi/cekKTP",
+            type: "POST",
+            data: {
+                noktp: noktp
+            },
+            success: function(data) {
+                $('#tempatktp').html(data);
+            }
+        })
+    }
+
+    // end transaksi
 </script>
 </body>
 

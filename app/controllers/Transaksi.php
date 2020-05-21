@@ -71,4 +71,21 @@ class Transaksi extends Controller
         $this->view('transaksi/riwayatTransaksi', $data);
         $this->view('templates/footerhotel');
     }
+
+
+    public function cekKTP()
+    {
+        $kata = '';
+        $banyak = $this->model('Transaksi_model')->cekPengunjung($_POST);
+        $banyak = $banyak['0']['banyak'];
+        if ($banyak > 0) {
+            $kata .= '<small class="ml-2 text-success" id="tempatktp2">pengunjung telah terdaftar</small>';
+
+            echo $kata;
+        } else {
+            $kata .= '<small class="ml-2 text-danger" id="tempatktp2">pengunjung belum terdaftar, <a href="' . BASEURL . 'pengunjung"> daftar disini</a> </small>';
+
+            echo $kata;
+        }
+    }
 }

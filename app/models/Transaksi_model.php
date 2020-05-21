@@ -41,4 +41,11 @@ class Transaksi_model
         $this->db->bind('tanggal', $data['tanggal']);
         return $this->db->resultSet();
     }
+
+    public function cekPengunjung($data)
+    {
+        $this->db->query("SELECT COUNT(*) as banyak FROM pengunjung WHERE no_ktp = :noktp");
+        $this->db->bind("noktp", $data['noktp']);
+        return $this->db->resultSet();
+    }
 }
