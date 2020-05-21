@@ -1,0 +1,103 @@
+FUNCTION (DONE) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+menghitung total transaksi di hari tertentu
+DELIMITER //
+
+CREATE FUNCTION total(date1 date) RETURNS integer
+BEGIN
+ DECLARE total integer;
+  set	total = (SELECT COUNT(*) FROM transaksi WHERE tanggal_masuk = date1);
+  RETURN total;
+END 
+
+//
+
+DELIMITER ;
+
+select total('2020-05-20') as total
+
+function yang dipakai: untuk mencari tahu status dari sebuah kamar
+
+DELIMITER //
+CREATE FUNCTION status(date date, nomor integer) RETURNS CHARACTER
+BEGIN
+ DECLARE jadi integer;
+ 	set hasil=	(SELECT a.tanggal_keluar FROM transaksi a INNER JOIN detail_transaksi b ON b.no_transaksi = a.no_transaksi WHERE b.no_kamar = nomor AND a.tanggal_keluar BETWEEN date AND '2050-01-01');
+  set jadi = ifnull(hasil,1);
+ 
+  RETURN jadi;
+END 
+                 //
+DELIMITER ;
+
+-----------------------------------------------
+STORE PROCEDURE(DONE) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+menampilakan detail transaksi
+
+DELIMITER //
+CREATE PROCEDURE tampilDetailTransaksi(IN id INT)
+BEGIN 
+SELECT b.no_kamar, b.jenis_kamar,b.harga
+FROM detail_transaksi a 
+INNER JOIN kamar b on a.no_kamar = b.no_kamar
+WHERE a.no_transaksi = id;
+END //
+DELIMITER ;
+
+------------------------------------------------
+SINGLE FUNCTION
+menampilkan PENGUNJUNG menggunaan UPPER CASE
+select UPPER(nama) as nama,alamat,jk,no_hp,no_ktp from pengunjung
+----------------------------------------------------------
+SORTING(DONE)XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+menampilkan transaksi yang total_harganya dari terbesar ke terkecil
+
+SELECT a.no_transaksi, b.nama as namaKaryawan, c.nama as namaPengunjung, a.jumlah_kamar,a.tanggal_masuk,a.tanggal_keluar,a.lama_menginap,a.total_harga
+FROM transaksi a 
+INNER JOIN karyawan b on b.id_karyawan = a.id_karyawan
+INNER JOIN pengunjung c on c.id_pengunjung = a.id_pengunjung
+ORDER BY a.total_harga DESC
+-----------------------------------------
+VIEW
+menampilkan untuk pengunjung, berdasarkan tanggal.
+CREATE VIEW cekid AS
+      SELECT transaksi.id_pengunjung, tanggal_masuk, tanggal_keluar FROM transaksi
+      INNER JOIN pengunjung
+      ON transaksi.id_pengunjung=pengunjung.id_pengunjung;
+
+SELECT * FROM cekid WHERE tanggal_masuk="2020-05-19";
+--------------------------------
+SUBQUERY
+menampilkan pengunjung berdasarkan id
+SELECT * FROM pengunjung where id_pengunjung = 1;
+-----------------------------------------------
+JOIN (DONE)XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+menampilakn detail transaksi yang terdapat pada procedure
+
+SELECT b.no_kamar, b.jenis_kamar,b.harga
+FROM detail_transaksi a 
+INNER JOIN kamar b on a.no_kamar = b.no_kamar
+WHERE a.no_transaksi = 1
+
+
+
+SELECT * FROM transaksi 
+FULL JOIN detail_transaksi USING(no_transaksi);
+-----------------------------------------------------
+CONTROL FLOW (DONE)XXXXXXXXXXXXXXXXXXXXX
+MENAMPILKAN STATUS KAMAR menggunakan function dengan control flow statement IF
+
+SELECT a.no_kamar, a.jenis_kamar, a.harga , IF(`status`(' . date('Y-m-d') . ',a.no_kamar)=1,"Kosong","Terpakai") AS ketersediaan
+from kamar a;
+
+----------------------------------------------
+
+AGGREGATE 
+MAX: mencari pembayaran kamar hotel terbesar
+...........................................
+MIN: untuk mencari pembayaran hotel terkecil
+...........................................
+SUM : untuk menjumnlahkan transaksi keseluruhan
+
+
+
+
