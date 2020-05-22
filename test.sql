@@ -26,7 +26,7 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `tampilDetailTransaksi` (IN `id` INT)  BEGIN 
+CREATE PROCEDURE `tampilDetailTransaksi` (IN `id` INT)  BEGIN 
 SELECT b.no_kamar, b.jenis_kamar,b.harga
 FROM transaksi a 
 INNER JOIN kamar b on a.no_kamar = b.no_kamar
@@ -36,7 +36,7 @@ END$$
 --
 -- Functions
 --
-CREATE DEFINER=`root`@`localhost` FUNCTION `status` (`date` DATE, `nomor` INT) RETURNS INT(2) BEGIN
+CREATE  FUNCTION `status` (`date` DATE, `nomor` INT) RETURNS INT(2) BEGIN
  DECLARE hasil DATE;
 
  DECLARE jadi integer;
@@ -46,7 +46,7 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `status` (`date` DATE, `nomor` INT) R
   RETURN jadi;
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `total` (`date1` DATE) RETURNS INT(11) BEGIN
+CREATE FUNCTION `total` (`date1` DATE) RETURNS INT(11) BEGIN
  DECLARE total integer;
   set	total = (SELECT COUNT(*) FROM transaksi WHERE tanggal_masuk = date1);
   RETURN total;
@@ -175,7 +175,7 @@ INSERT INTO `transaksi` (`no_transaksi`, `id_pengunjung`, `id_karyawan`, `tangga
 --
 DROP TABLE IF EXISTS `cekid`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `cekid`  AS  select ucase(`pengunjung`.`nama`) AS `nama`,`pengunjung`.`alamat` AS `alamat`,`pengunjung`.`jk` AS `jk`,`pengunjung`.`no_hp` AS `no_hp`,`pengunjung`.`no_ktp` AS `no_ktp`,`transaksi`.`tanggal_masuk` AS `tanggal_masuk`,`transaksi`.`tanggal_keluar` AS `tanggal_keluar` from (`transaksi` join `pengunjung` on((`transaksi`.`id_pengunjung` = `pengunjung`.`id_pengunjung`))) ;
+CREATE VIEW `cekid`  AS  select ucase(`pengunjung`.`nama`) AS `nama`,`pengunjung`.`alamat` AS `alamat`,`pengunjung`.`jk` AS `jk`,`pengunjung`.`no_hp` AS `no_hp`,`pengunjung`.`no_ktp` AS `no_ktp`,`transaksi`.`tanggal_masuk` AS `tanggal_masuk`,`transaksi`.`tanggal_keluar` AS `tanggal_keluar` from (`transaksi` join `pengunjung` on((`transaksi`.`id_pengunjung` = `pengunjung`.`id_pengunjung`))) ;
 
 --
 -- Indexes for dumped tables

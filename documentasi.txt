@@ -4,8 +4,9 @@ FUNCTION (DONE) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 function yang dipakai: untuk mencari tahu status dari sebuah kamar
 
 DELIMITER //
-CREATE FUNCTION status(date date, nomor integer) RETURNS CHARACTER
+CREATE FUNCTION status(date date, nomor integer) RETURNS int 
 BEGIN
+DECLARE hasil date;
  DECLARE jadi integer;
  	set hasil=	(SELECT a.tanggal_keluar FROM transaksi a INNER JOIN detail_transaksi b ON b.no_transaksi = a.no_transaksi WHERE b.no_kamar = nomor AND a.tanggal_keluar BETWEEN date AND '2050-01-01');
   set jadi = ifnull(hasil,1);
