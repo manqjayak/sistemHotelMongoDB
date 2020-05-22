@@ -1,19 +1,5 @@
 FUNCTION (DONE) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-menghitung total transaksi di hari tertentu
-DELIMITER //
 
-CREATE FUNCTION total(date1 date) RETURNS integer
-BEGIN
- DECLARE total integer;
-  set	total = (SELECT COUNT(*) FROM transaksi WHERE tanggal_masuk = date1);
-  RETURN total;
-END 
-
-//
-
-DELIMITER ;
-
-select total('2020-05-20') as total
 
 function yang dipakai: untuk mencari tahu status dari sebuah kamar
 
@@ -31,13 +17,13 @@ DELIMITER ;
 
 -----------------------------------------------
 STORE PROCEDURE(DONE) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-menampilakan detail transaksi
+menampilakan keterangan dari kamar yang sewa
 
 DELIMITER //
 CREATE PROCEDURE tampilDetailTransaksi(IN id INT)
 BEGIN 
 SELECT b.no_kamar, b.jenis_kamar,b.harga
-FROM detail_transaksi a 
+FROM transaksi a 
 INNER JOIN kamar b on a.no_kamar = b.no_kamar
 WHERE a.no_transaksi = id;
 END //
@@ -84,14 +70,10 @@ JOIN (DONE)XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 menampilakn detail transaksi yang terdapat pada procedure
 
 SELECT b.no_kamar, b.jenis_kamar,b.harga
-FROM detail_transaksi a 
+FROM kamar a 
 INNER JOIN kamar b on a.no_kamar = b.no_kamar
 WHERE a.no_transaksi = 1
 
-
-
-SELECT * FROM transaksi 
-FULL JOIN detail_transaksi USING(no_transaksi);
 -----------------------------------------------------
 CONTROL FLOW (DONE)XXXXXXXXXXXXXXXXXXXXX
 MENAMPILKAN STATUS KAMAR menggunakan function dengan control flow statement IF

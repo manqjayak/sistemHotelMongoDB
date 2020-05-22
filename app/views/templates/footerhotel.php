@@ -233,6 +233,30 @@
     }
 
     // end transaksi
+
+
+    // cek harga
+    $(document).on('click', '#nokamaropsi', function() {
+        let nokamar = $(this).val();
+        getHarga(nokamar)
+    })
+
+    function getHarga(nokamar) {
+        $.ajax({
+            url: "<?= BASEURL ?>transaksi/getHarga",
+            type: "POST",
+            dataType: 'text',
+            data: {
+                nokamar: nokamar
+            },
+            success: function(data) {
+
+                $('#harga').val(data)
+            }
+        })
+    }
+
+    // cek harga
 </script>
 </body>
 

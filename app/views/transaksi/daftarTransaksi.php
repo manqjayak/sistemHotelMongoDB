@@ -40,7 +40,6 @@
                 <th>No</th>
                 <th>Nama Karyawan</th>
                 <th>Nama Pengunjung</th>
-                <th>Jumlah Kamar</th>
                 <th>Tanggal Masuk</th>
                 <th>Tanggal Keluar</th>
                 <th>Lama Menginap</th>
@@ -56,7 +55,6 @@
                     <td> <?= $no ?></td>
                     <td><?= $daftar['namaKaryawan'] ?></td>
                     <td><?= $daftar['namaPengunjung'] ?></td>
-                    <td><?= $daftar['jumlah_kamar']  ?> Kamar</td>
                     <td><?= $daftar['tanggal_masuk'] ?></td>
                     <td><?= $daftar['tanggal_keluar'] ?></td>
                     <td><?= $daftar['lama_menginap'] ?> Hari</td>

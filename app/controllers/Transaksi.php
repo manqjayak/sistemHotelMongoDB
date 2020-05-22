@@ -6,9 +6,10 @@ class Transaksi extends Controller
     public function index()
     {
         $data['judul'] = "Transaksi";
-        // $data['active'] = 'karyawan';
+        $data['nokamar'] = $this->model('Transaksi_model')->statusKamar();
+
         $this->view('templates/headerhotel', $data);
-        $this->view('transaksi/index');
+        $this->view('transaksi/index', $data);
         $this->view('templates/footerhotel');
     }
 
@@ -20,6 +21,31 @@ class Transaksi extends Controller
         $this->view('templates/headerhotel', $data);
         $this->view('transaksi/daftarTransaksi', $data);
         $this->view('templates/footerhotel');
+    }
+
+    public function tambahTransaksi()
+    {
+        if (!$_POST) {
+            header('Location: ' . BASEURL . 'transaksi');
+        }
+        $id = $this->model('Transaksi_model')->getIdbyKTP($_POST['noktp']);
+        $id = $id[0]['id_pengunjung'];
+        if ($this->model('Transaksi_model')->tambahTransaksi($_POST, $id) > 0) {
+            Flasher::setFlash('Berhasil', 'Dipesan', 'success');
+            header('Location: ' . BASEURL . 'transaksi');
+            exit;
+        } else {
+            Flasher::setFlash('gagal', 'Dipesan', 'danger');
+            header('Location: ' . BASEURL . 'transaksi');
+            exit;
+        }
+    }
+    public function getharga()
+    {
+
+        $harga = $this->model('Transaksi_model')->getHarga($_POST);
+        $harga = $harga[0]['harga'];
+        echo $harga;
     }
 
     public function lihatKamar()

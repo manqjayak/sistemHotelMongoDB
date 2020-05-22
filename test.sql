@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 21, 2020 at 06:47 AM
+-- Generation Time: May 22, 2020 at 01:59 PM
 -- Server version: 10.0.17-MariaDB
 -- PHP Version: 7.4.2
 
@@ -22,24 +22,53 @@ SET time_zone = "+00:00";
 -- Database: `test`
 --
 
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `tampilDetailTransaksi` (IN `id` INT)  BEGIN 
+SELECT b.no_kamar, b.jenis_kamar,b.harga
+FROM transaksi a 
+INNER JOIN kamar b on a.no_kamar = b.no_kamar
+WHERE a.no_transaksi = id;
+END$$
+
+--
+-- Functions
+--
+CREATE DEFINER=`root`@`localhost` FUNCTION `status` (`date` DATE, `nomor` INT) RETURNS INT(2) BEGIN
+ DECLARE hasil DATE;
+
+ DECLARE jadi integer;
+ 	set hasil=	(SELECT a.tanggal_keluar FROM transaksi a INNER JOIN kamar b on b.no_kamar = a.no_kamar WHERE b.no_kamar = nomor AND a.tanggal_keluar BETWEEN date AND '2050-01-01');
+  set jadi = ifnull(hasil,1);
+ 
+  RETURN jadi;
+END$$
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `total` (`date1` DATE) RETURNS INT(11) BEGIN
+ DECLARE total integer;
+  set	total = (SELECT COUNT(*) FROM transaksi WHERE tanggal_masuk = date1);
+  RETURN total;
+END$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detail_transaksi`
+-- Stand-in structure for view `cekid`
+-- (See below for the actual view)
 --
-
-CREATE TABLE `detail_transaksi` (
-  `id_detail_transaksi` int(10) NOT NULL,
-  `no_transaksi` int(11) NOT NULL,
-  `no_kamar` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `detail_transaksi`
---
-
-INSERT INTO `detail_transaksi` (`id_detail_transaksi`, `no_transaksi`, `no_kamar`) VALUES
-(1, 1, 101);
+CREATE TABLE `cekid` (
+`nama` varchar(30)
+,`alamat` varchar(20)
+,`jk` enum('perempuan','laki-laki')
+,`no_hp` varchar(20)
+,`no_ktp` bigint(16)
+,`tanggal_masuk` date
+,`tanggal_keluar` date
+);
 
 -- --------------------------------------------------------
 
@@ -61,7 +90,9 @@ INSERT INTO `kamar` (`no_kamar`, `jenis_kamar`, `harga`) VALUES
 (101, 'Standar room', 750000),
 (201, 'Superior room', 800000),
 (202, 'Superior room', 1000000),
-(203, 'Superior room', 500000);
+(203, 'Superior room', 500000),
+(204, 'Superior room', 2000000),
+(205, 'Superior room', 10000000);
 
 -- --------------------------------------------------------
 
@@ -82,7 +113,7 @@ CREATE TABLE `karyawan` (
 --
 
 INSERT INTO `karyawan` (`id_karyawan`, `nama`, `jk`, `alamat`, `no_hp`) VALUES
-('A01', 'Tadi Apa Ya', 'laki-laki', 'Jalan Taruma Negara', '09856789'),
+('A01', 'Tadi Apa Ya', 'laki-laki', 'Jalan Taruma Negara', '0985678921'),
 ('A02', 'Aku Sayang Kamu', 'laki-laki', 'jalan-jalan', '0854323412');
 
 -- --------------------------------------------------------
@@ -106,7 +137,8 @@ CREATE TABLE `pengunjung` (
 
 INSERT INTO `pengunjung` (`id_pengunjung`, `nama`, `alamat`, `jk`, `no_hp`, `no_ktp`) VALUES
 (1, 'Ayu Trisna', 'Jalan Panji Semirang', 'perempuan', '0857380000', 4323456345323453),
-(2, 'Irmayanti', 'Jalan Panji Semirang', 'perempuan', '09890050190', 4232123421234212);
+(2, 'Irmayanti', 'Jalan Panji Semirang', 'perempuan', '09890050190', 4232123421234212),
+(3, 'Test', 'jalan test', 'laki-laki', '08431723121', 2984110294121);
 
 -- --------------------------------------------------------
 
@@ -118,10 +150,10 @@ CREATE TABLE `transaksi` (
   `no_transaksi` int(11) NOT NULL,
   `id_pengunjung` int(10) NOT NULL,
   `id_karyawan` varchar(10) NOT NULL,
-  `jumlah_kamar` int(11) NOT NULL,
   `tanggal_masuk` date NOT NULL,
   `tanggal_keluar` date NOT NULL,
   `lama_menginap` int(11) NOT NULL,
+  `no_kamar` int(11) NOT NULL,
   `total_harga` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -129,21 +161,25 @@ CREATE TABLE `transaksi` (
 -- Dumping data for table `transaksi`
 --
 
-INSERT INTO `transaksi` (`no_transaksi`, `id_pengunjung`, `id_karyawan`, `jumlah_kamar`, `tanggal_masuk`, `tanggal_keluar`, `lama_menginap`, `total_harga`) VALUES
-(0, 1, 'A01', 1, '2020-05-20', '2020-05-28', 2, 750000),
-(1, 2, 'A01', 1, '2020-05-19', '2020-05-20', 1, 750000);
+INSERT INTO `transaksi` (`no_transaksi`, `id_pengunjung`, `id_karyawan`, `tanggal_masuk`, `tanggal_keluar`, `lama_menginap`, `no_kamar`, `total_harga`) VALUES
+(1, 2, 'A01', '2020-05-19', '2020-05-20', 1, 201, 670000),
+(2, 3, 'A02', '2020-05-22', '2020-05-25', 3, 203, 5000000),
+(3, 1, 'A01', '2020-05-20', '2020-05-28', 2, 101, 750000),
+(4, 1, 'A01', '2020-05-23', '2020-05-27', 3, 205, 10000000),
+(5, 2, 'A02', '2020-05-22', '2020-05-23', 1, 204, 2000000);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `cekid`
+--
+DROP TABLE IF EXISTS `cekid`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `cekid`  AS  select ucase(`pengunjung`.`nama`) AS `nama`,`pengunjung`.`alamat` AS `alamat`,`pengunjung`.`jk` AS `jk`,`pengunjung`.`no_hp` AS `no_hp`,`pengunjung`.`no_ktp` AS `no_ktp`,`transaksi`.`tanggal_masuk` AS `tanggal_masuk`,`transaksi`.`tanggal_keluar` AS `tanggal_keluar` from (`transaksi` join `pengunjung` on((`transaksi`.`id_pengunjung` = `pengunjung`.`id_pengunjung`))) ;
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `detail_transaksi`
---
-ALTER TABLE `detail_transaksi`
-  ADD PRIMARY KEY (`id_detail_transaksi`),
-  ADD KEY `no_transaksi` (`no_transaksi`),
-  ADD KEY `no_kamar` (`no_kamar`);
 
 --
 -- Indexes for table `kamar`
@@ -176,27 +212,20 @@ ALTER TABLE `transaksi`
 --
 
 --
--- AUTO_INCREMENT for table `detail_transaksi`
---
-ALTER TABLE `detail_transaksi`
-  MODIFY `id_detail_transaksi` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `pengunjung`
 --
 ALTER TABLE `pengunjung`
-  MODIFY `id_pengunjung` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_pengunjung` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `transaksi`
+--
+ALTER TABLE `transaksi`
+  MODIFY `no_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `detail_transaksi`
---
-ALTER TABLE `detail_transaksi`
-  ADD CONSTRAINT `detail_transaksi_ibfk_1` FOREIGN KEY (`no_transaksi`) REFERENCES `transaksi` (`no_transaksi`),
-  ADD CONSTRAINT `detail_transaksi_ibfk_2` FOREIGN KEY (`no_kamar`) REFERENCES `kamar` (`no_kamar`);
 
 --
 -- Constraints for table `transaksi`
