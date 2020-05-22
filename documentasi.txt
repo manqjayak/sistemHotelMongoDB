@@ -98,7 +98,8 @@ SELECT COUNT (*) as banyak FROM pengunjung;
 
 ---------------------------------------------
 TRIGGER 
-MASIH DIPIKIRKAN
+menambahkan nama, nohp, nokamar, tanggal keluar, dan status ke tabel status kunci setelah transaksi dilakukan
+
 
 
 

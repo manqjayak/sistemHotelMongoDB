@@ -85,6 +85,7 @@ class Transaksi extends Controller
     public function riwayatTransaksi()
     {
 
+
         if (!$_POST || $_POST['tanggal'] == "") {
             $data['riwayat'] = $this->model('Transaksi_model')->selectRiwayat();
         } else {

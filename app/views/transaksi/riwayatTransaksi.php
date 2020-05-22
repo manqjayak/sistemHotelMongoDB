@@ -30,7 +30,7 @@
     <div class="row">
 
         <div class="col">
-            <form action="<?= BASEURL ?>riwayat/riwayatTransaksi" method="POST">
+            <form action="<?= BASEURL ?>transaksi/riwayatTransaksi" method="POST">
 
 
                 <div class="form-group">

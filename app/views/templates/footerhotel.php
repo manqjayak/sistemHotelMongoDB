@@ -237,7 +237,7 @@
 
     // cek harga
     $(document).on('click', '#nokamaropsi', function() {
-        let nokamar = $(this).val();
+        let nokamar = $(this).children().val();
         getHarga(nokamar)
     })
 
@@ -256,7 +256,71 @@
         })
     }
 
-    // cek harga
+    // ganti status pengembalian kunci
+    let editstatus = false;
+    $(document).on('click', '#ubahstatus', function() {
+        if (!editstatus) {
+            editstatus = true
+            let id = $(this).data('id')
+            console.log(id);
+            let status = $('#st' + id).html()
+            console.log(status)
+
+            let katajenis = ''
+            katajenis += ` <select class="form-control" id="statusopsi" name="statusopsi">
+                                 <option value="${status}" selected="selected" class="text-capitalize" >${status}</option>`
+            if (status == "BELUM ") {
+                katajenis += `<option value="SUDAH">SUDAH</option>
+                        </select>`
+            } else {
+                katajenis += `<option value="BELUM">BELUM</option>
+            </select>`
+            }
+
+            $('#st' + id).html(katajenis)
+
+
+            $('#tdop' + id).append(`<span id="batalstatus" data-id='${id}' class="badge-danger w-25 px-2 mr-1" style="cursor:pointer">Batal</span>`)
+            $('#tdop' + id).append(`<span  id="simpanstatus" data-id='${id}' class="badge-success " style="cursor:pointer">Simpan</span>`)
+        }
+
+    })
+    $(document).on('click', '#batalstatus', function() {
+
+        let id = $(this).data('id')
+        let status = $('#st' + id).children().val();
+        $('#st' + id).text(status)
+
+        $(this).remove();
+        $(`#simpanstatus[data-id = '${id}']`).remove()
+        editstatus = false;
+    })
+    $(document).on('click', '#simpanstatus', function() {
+
+        let id = $(this).data('id')
+        let status = $('#st' + id).children().val();
+        $('#st' + id).text(status)
+
+        $(this).remove();
+        $(`#batalstatus[data-id = '${id}']`).remove()
+        editstatus = false;
+        gantistatus(id, status)
+    })
+
+    function gantistatus(id, status) {
+        $.ajax({
+            url: "<?= BASEURL ?>status/ubah",
+            type: "POST",
+            data: {
+                id: id,
+                status: status
+            },
+            success: function(data) {
+                $('#flasher').html(data)
+            }
+        })
+    }
+    // end ganti status kembalian kunci
 </script>
 </body>
 

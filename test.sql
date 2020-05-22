@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 22, 2020 at 01:59 PM
+-- Generation Time: May 23, 2020 at 12:20 AM
 -- Server version: 10.0.17-MariaDB
 -- PHP Version: 7.4.2
 
@@ -36,7 +36,7 @@ END$$
 --
 -- Functions
 --
-CREATE  FUNCTION `status` (`date` DATE, `nomor` INT) RETURNS INT(2) BEGIN
+CREATE FUNCTION `status` (`date` DATE, `nomor` INT) RETURNS INT(2) BEGIN
  DECLARE hasil DATE;
 
  DECLARE jadi integer;
@@ -143,6 +143,29 @@ INSERT INTO `pengunjung` (`id_pengunjung`, `nama`, `alamat`, `jk`, `no_hp`, `no_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `status_kunci`
+--
+
+CREATE TABLE `status_kunci` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `no_hp` varchar(20) NOT NULL,
+  `tanggal_keluar` date NOT NULL,
+  `no_kamar` int(11) NOT NULL,
+  `status` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `status_kunci`
+--
+
+INSERT INTO `status_kunci` (`id`, `nama`, `no_hp`, `tanggal_keluar`, `no_kamar`, `status`) VALUES
+(2, 'Irmayanti', '09890050190', '2020-05-24', 205, 'BELUM'),
+(3, 'Irmayanti', '09890050190', '2020-05-22', 202, 'BELUM');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `transaksi`
 --
 
@@ -164,9 +187,22 @@ CREATE TABLE `transaksi` (
 INSERT INTO `transaksi` (`no_transaksi`, `id_pengunjung`, `id_karyawan`, `tanggal_masuk`, `tanggal_keluar`, `lama_menginap`, `no_kamar`, `total_harga`) VALUES
 (1, 2, 'A01', '2020-05-19', '2020-05-20', 1, 201, 670000),
 (2, 3, 'A02', '2020-05-22', '2020-05-25', 3, 203, 5000000),
-(3, 1, 'A01', '2020-05-20', '2020-05-28', 2, 101, 750000),
 (4, 1, 'A01', '2020-05-23', '2020-05-27', 3, 205, 10000000),
-(5, 2, 'A02', '2020-05-22', '2020-05-23', 1, 204, 2000000);
+(11, 2, 'A02', '2020-05-21', '2020-05-22', 1, 202, 750000);
+
+--
+-- Triggers `transaksi`
+--
+DELIMITER $$
+CREATE TRIGGER `statusKunci` AFTER INSERT ON `transaksi` FOR EACH ROW BEGIN
+DECLARE namabaru CHARACTER(20);
+DECLARE nohpbaru CHARACTER(20);
+set namabaru = (SELECT nama FROM pengunjung WHERE id_pengunjung = NEW.id_pengunjung);
+set nohpbaru = (SELECT no_hp FROM pengunjung WHERE id_pengunjung = NEW.id_pengunjung);
+INSERT INTO status_kunci VALUES ('',namabaru,nohpbaru,NEW.tanggal_keluar,NEW.no_kamar,"BELUM");
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -200,6 +236,12 @@ ALTER TABLE `pengunjung`
   ADD PRIMARY KEY (`id_pengunjung`);
 
 --
+-- Indexes for table `status_kunci`
+--
+ALTER TABLE `status_kunci`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `transaksi`
 --
 ALTER TABLE `transaksi`
@@ -218,10 +260,16 @@ ALTER TABLE `pengunjung`
   MODIFY `id_pengunjung` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `status_kunci`
+--
+ALTER TABLE `status_kunci`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `no_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `no_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
