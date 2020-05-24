@@ -101,6 +101,19 @@ TRIGGER
 menambahkan nama, nohp, nokamar, tanggal keluar, dan status ke tabel status kunci setelah transaksi dilakukan
 
 
+DELIMITER //
+CREATE TRIGGER statusKunci
+AFTER INSERT ON transaksi FOR EACH ROW 
+BEGIN
+DECLARE namabaru CHARACTER(20);
+DECLARE nohpbaru CHARACTER(20);
+set namabaru = (SELECT nama FROM pengunjung WHERE id_pengunjung = NEW.id_pengunjung);
+set nohpbaru = (SELECT no_hp FROM pengunjung WHERE id_pengunjung = NEW.id_pengunjung);
+INSERT INTO status_kunci VALUES ('',namabaru,nohpbaru,NEW.tanggal_keluar,NEW.no_kamar,"BELUM");
+END //
+DELIMITER ;
+
+
 
 
 
