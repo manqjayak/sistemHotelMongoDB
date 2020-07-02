@@ -1,0 +1,33 @@
+[{
+  "_id": {
+    "$oid": "5efc91fcd46e00006f00419d"
+  },
+  "no_kamar": "107",
+  "jenis_kamar": "superior",
+  "harga": "400000",
+  "status": "kosong"
+},{
+  "_id": {
+    "$oid": "5efc91fcd46e00006f00419e"
+  },
+  "no_kamar": "108",
+  "jenis_kamar": "normal",
+  "harga": "600000",
+  "status": "terisi"
+},{
+  "_id": {
+    "$oid": "5efc91fcd46e00006f00419f"
+  },
+  "no_kamar": "109",
+  "jenis_kamar": "sedang",
+  "harga": "500000",
+  "status": "kosong"
+},{
+  "_id": {
+    "$oid": "5efc9faad46e00006f0041a0"
+  },
+  "no_kamar": "110",
+  "jenis_kamar": "normal",
+  "harga": "400000",
+  "status": "kosong"
+}]

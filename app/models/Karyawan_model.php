@@ -4,60 +4,57 @@
 class Karyawan_model
 {
 
-    private $table = 'karyawan';
+    private $collection;
     private $db;
 
     public function __construct()
     {
-
-        $this->db = new Database;
+        $conn = new MongoDB\Client;
+        $this->db=$conn->hotel;
+        $this->collection = $this->db->karyawan;
     }
 
     public function selectAll()
     {
-        $this->db->query('SELECT * FROM ' . $this->table);
-        return $this->db->resultSet();
+        // $dummy = $this->collection->insertMany([
+        //     ['_id'=>'A0',"nama"=>"agus",'alamat'=>'jalan samping jalan','jk'=>'perempuan','no_hp'=>"08432354323"],
+        //     ['_id'=>'A1',"nama"=>"adi",'alamat'=>'jalan samping agus','jk'=>'laki-laki','no_hp'=>"08432354324"],
+        // ]);
+        // echo $dummy->getInsertedCount();die;
+
+        $data = $this->collection->find();
+        return $data;
     }
 
     public function tambahKaryawan($data)
     {
 
 
-        $query = "INSERT INTO karyawan
-        VALUES
-        (:idkaryawan,:nama, :jeniskelamin,:alamat,:notlp)";
-
-        $this->db->query($query);
-
-        $this->db->bind('idkaryawan', $data['idkaryawan']);
-        $this->db->bind('nama', $data['nama']);
-        $this->db->bind('jeniskelamin', $data['jeniskelamin']);
-        $this->db->bind('alamat', $data['alamat']);
-        $this->db->bind('notlp', $data['notlp']);
-        $this->db->execute();
-
-        return $this->db->rowCount();
+        $data= $this->collection->insertOne([
+            '_id' =>$data['idkaryawan'],
+            'nama'=>$data['nama'],
+            'alamat'=>$data['alamat'],
+            'jk' => $data['jeniskelamin'],
+            'no_hp'=> $data['notlp'],
+        ]);
+    
+        return $data->getInsertedCount();
     }
 
     public function ubahKaryawan($data)
-    {
+    { 
+       
+        $data = $this->collection->updateOne(
+            ['_id'=>$data['id_karyawan']],
+            ['$set'=>
+                ['nama'=>$data['nama'],
+                'jk'=>$data['jk'],
+                'alamat'=>$data['alamat'],
+                'no_hp'=>$data['no_hp'],
+                ]
+            ]
+        );
+        return $data->getMatchedCount();
 
-        $query = "UPDATE karyawan
-                    SET
-                    nama = :nama,
-                    jk= :jk,
-                    alamat= :alamat,
-                    no_hp = :no_hp
-                    WHERE id_karyawan = :id_karyawan";
-
-        $this->db->query($query);
-        $this->db->bind('nama', $data['nama']);
-        $this->db->bind('jk', $data['jk']);
-        $this->db->bind('alamat', $data['alamat']);
-        $this->db->bind('no_hp', $data['no_hp']);
-        $this->db->bind('id_karyawan', $data['id_karyawan']);
-        $this->db->execute();
-
-        return $this->db->rowCount();
     }
 }

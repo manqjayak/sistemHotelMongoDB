@@ -180,15 +180,7 @@
                                 </li>
                             </ul> -->
                         </li>
-                        <li class="nav-item has-treeview">
-                            <a href="<?= BASEURL ?>transaksi/daftarTransaksi" class="nav-link">
-                                <i class="nav-icon far fa-circle"></i>
-                                <p>
-                                    Nota Transaksi
-                                    <!-- <i class="fas fa-angle-left right"></i> -->
-                                </p>
-                            </a>
-                        </li>
+
                         <li class="nav-item has-treeview">
                             <a href="<?= BASEURL ?>transaksi/riwayatTransaksi" class="nav-link">
                                 <i class="nav-icon far fa-circle"></i>
@@ -198,15 +190,7 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item has-treeview">
-                            <a href="<?= BASEURL ?>status" class="nav-link">
-                                <i class="nav-icon far fa-circle"></i>
-                                <p>
-                                    Status Kunci
-                                    <!-- <i class="fas fa-angle-left right"></i> -->
-                                </p>
-                            </a>
-                        </li>
+
                         <!-- <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-edit"></i>

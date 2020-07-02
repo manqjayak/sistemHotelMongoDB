@@ -1,0 +1,41 @@
+[{
+  "_id": {
+    "$oid": "5efde627d46e00006f0041b2"
+  },
+  "id_karyawan": "A01",
+  "pengunjung": {
+    "nama": "wayan",
+    "no_hp": "08123456789",
+    "no_ktp": "5875736475832948"
+  },
+  "kamar": {
+    "no_kamar": "110",
+    "jenis_kamar": "normal",
+    "kunci": "sudah",
+    "harga": "400000"
+  },
+  "tanggal_masuk": "2020-07-02",
+  "tanggal_keluar": "2020-07-03",
+  "lama_menginap": "1",
+  "harga": "400000"
+},{
+  "_id": {
+    "$oid": "5efe25acd46e00006f0041b4"
+  },
+  "id_karyawan": "A02",
+  "pengunjung": {
+    "nama": "ketut",
+    "no_hp": "08123456709",
+    "no_ktp": "5875736475832654"
+  },
+  "kamar": {
+    "no_kamar": "108",
+    "jenis_kamar": "normal",
+    "kunci": "belum",
+    "harga": "600000"
+  },
+  "tanggal_masuk": "2020-07-04",
+  "tanggal_keluar": "2020-07-04",
+  "lama_menginap": "1",
+  "harga": "600000"
+}]

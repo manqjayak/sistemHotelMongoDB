@@ -1,0 +1,37 @@
+[{
+  "_id": {
+    "$oid": "5efcae1bd46e00006f0041a1"
+  },
+  "nama": "wayan",
+  "alamat": "jalan satu",
+  "jk": "laki-laki",
+  "no_hp": "08123456789",
+  "no_ktp": "5875736475832948"
+},{
+  "_id": {
+    "$oid": "5efcae1bd46e00006f0041a2"
+  },
+  "nama": "kadek",
+  "alamat": "jalan dua",
+  "jk": "perempuan",
+  "no_hp": "08123456790",
+  "no_ktp": "5875736475832876"
+},{
+  "_id": {
+    "$oid": "5efcae1bd46e00006f0041a3"
+  },
+  "nama": "ketut",
+  "alamat": "jalan tiga",
+  "jk": "laki-laki",
+  "no_hp": "08123456709",
+  "no_ktp": "5875736475832654"
+},{
+  "_id": {
+    "$oid": "5efcb03dd46e00006f0041a4"
+  },
+  "nama": "nyoman",
+  "alamat": "jalan empat",
+  "jk": "laki-laki",
+  "no_hp": "08943232183",
+  "no_ktp": "5849383728123432"
+}]

@@ -52,7 +52,7 @@
                     <td id='n<?= $kamar['no_kamar'] ?>'><?= $kamar['no_kamar'] ?> </td>
                     <td id='j<?= $kamar['no_kamar'] ?>'><?= $kamar['jenis_kamar'] ?></td>
                     <td id='h<?= $kamar['no_kamar'] ?>'><?= $kamar['harga'] ?></td>
-                    <td><?= $kamar['ketersediaan'] ?></td>
+                    <td><?= $kamar['status'] ?></td>
                     <td id='o<?= $kamar['no_kamar'] ?>'>
                         <span id="editButton" data-kamar='<?= $kamar['no_kamar'] ?>' class="badge-warning w-25 px-2" style="cursor:pointer">Edit</span>
                         <!-- <span class="badge-danger px-1" onclick="return confirm('Yakin?')"><a href="<?= BASEURL ?> kamar/delete" style="color:white;">Hapus</a></span> -->
@@ -87,8 +87,9 @@
                     <div class="form-group">
                         <label for="jeniskamar">Jenis Kamar</label>
                         <select class="form-control" id="jeniskamar" name="jeniskamar" required="">
-                            <option value="Standar room">Standar Room</option>
-                            <option value="Superior room">Superior Room</option>
+                            <option value="superior">superior</option>
+                            <option value="sedang">sedang</option>
+                            <option value="normal">normal</option>
                         </select>
                     </div>
                     <div class="form-group">

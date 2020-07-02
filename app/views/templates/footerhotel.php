@@ -39,11 +39,11 @@
             let katajenis = ''
             katajenis += ` <select class="form-control" id="jeniskamar" name="jeniskamar">
                                  <option value="${jenisKamar}" selected="selected" class="text-capitalize" >${jenisKamar}</option>`
-            if (jenisKamar == "Standar room") {
-                katajenis += `<option value="Superior room">Superior Room</option>
+            if (jenisKamar == "superior") {
+                katajenis += `<option value="normal">normal</option>
                         </select>`
             } else {
-                katajenis += `<option value="Standar room">Standar Room</option>
+                katajenis += `<option value="superior">superior</option>
             </select>`
             }
             $('#n' + noKamar).html(`<input  type = "number" name="nokamar" value='${noKamar}'>`)
@@ -183,7 +183,8 @@
             },
             dataType: "text",
             success: function(data) {
-                $('#flasher').html(data)
+               
+                 $('#flasher').html(data)
             },
 
         })
@@ -237,7 +238,7 @@
 
     // cek harga
     $(document).on('click', '#nokamaropsi', function() {
-        let nokamar = $(this).children().val();
+        let nokamar = $(this).val();
         getHarga(nokamar)
     })
 
@@ -245,82 +246,150 @@
         $.ajax({
             url: "<?= BASEURL ?>transaksi/getHarga",
             type: "POST",
-            dataType: 'text',
+            dataType: 'json',
             data: {
                 nokamar: nokamar
             },
             success: function(data) {
-
-                $('#harga').val(data)
+                let hargaKamar = parseInt(data['harga']);
+                let lama =parseInt($('#lamamenginap').val())
+                if(isNaN(lama)){
+                    $('#harga').val(hargaKamar)
+                }else{
+                    $('#harga').val(hargaKamar*lama)
+                }
+                
+                $('#kamar').html('<input type="hidden" id="jenis_kamar" value="'+data['jenis_kamar']+'"><input type="hidden" id="harga_kamar" value="'+data['harga']+'">')
             }
         })
     }
-
-    // ganti status pengembalian kunci
-    let editstatus = false;
-    $(document).on('click', '#ubahstatus', function() {
-        if (!editstatus) {
-            editstatus = true
-            let id = $(this).data('id')
-            console.log(id);
-            let status = $('#st' + id).html()
-            console.log(status)
-
-            let katajenis = ''
-            katajenis += ` <select class="form-control" id="statusopsi" name="statusopsi">
-                                 <option value="${status}" selected="selected" class="text-capitalize" >${status}</option>`
-            if (status == "BELUM ") {
-                katajenis += `<option value="SUDAH">SUDAH</option>
-                        </select>`
-            } else {
-                katajenis += `<option value="BELUM">BELUM</option>
-            </select>`
-            }
-
-            $('#st' + id).html(katajenis)
-
-
-            $('#tdop' + id).append(`<span id="batalstatus" data-id='${id}' class="badge-danger w-25 px-2 mr-1" style="cursor:pointer">Batal</span>`)
-            $('#tdop' + id).append(`<span  id="simpanstatus" data-id='${id}' class="badge-success " style="cursor:pointer">Simpan</span>`)
-        }
-
+    //tambah pemesanan kamar ke transaksi
+    $(document).on('click','#submit_transaksi',function(){
+        //kamar
+       let jenis_kamar= ($('#jenis_kamar').val());
+       let no_kamar= ($('#nokamaropsi').val());
+       let harga_kamar =($('#harga_kamar').val());
+       //karyawan
+       let id_karyawan = ($('#idkaryawan').val());
+       //pengunjung
+       let no_ktp =($('#noktp').val());
+       let no_hp =($('#no_hp').val());
+       let nama =($('#nama').val());
+       //umum
+       let harga = ($('#harga').val());
+       let tanggal_masuk = ($('#tanggalmasuk').val());
+       let tanggal_keluar = ($('#tanggalkeluar').val());
+       let lama_menginap = $('#lamamenginap').val();
+       if(!no_ktp || !id_karyawan || !lama_menginap){
+        $('#tempatktp').html('<small class="text-danger ml-2" id="tempatktp2">terdapat field yang kosong</small>')
+       }else{
+        tambahTransaksi(jenis_kamar,no_kamar,harga_kamar,id_karyawan,no_ktp,no_hp,nama,harga,tanggal_masuk,tanggal_keluar,lama_menginap)
+       }
+       
     })
-    $(document).on('click', '#batalstatus', function() {
-
-        let id = $(this).data('id')
-        let status = $('#st' + id).children().val();
-        $('#st' + id).text(status)
-
-        $(this).remove();
-        $(`#simpanstatus[data-id = '${id}']`).remove()
-        editstatus = false;
-    })
-    $(document).on('click', '#simpanstatus', function() {
-
-        let id = $(this).data('id')
-        let status = $('#st' + id).children().val();
-        $('#st' + id).text(status)
-
-        $(this).remove();
-        $(`#batalstatus[data-id = '${id}']`).remove()
-        editstatus = false;
-        gantistatus(id, status)
-    })
-
-    function gantistatus(id, status) {
+    //ajax tambah transaksi
+    function tambahTransaksi(jenis_kamar,no_kamar,harga_kamar,id_karyawan,no_ktp,no_hp,nama,harga,tanggal_masuk,tanggal_keluar,lama_menginap){
         $.ajax({
-            url: "<?= BASEURL ?>status/ubah",
-            type: "POST",
+            url : "<?= BASEURL ?>transaksi/tambahTransaksi",
+            method: "post",
+            dataType: 'text',
             data: {
-                id: id,
-                status: status
+                jenis_kamar :jenis_kamar,
+                no_kamar:no_kamar,
+                harga_kamar:harga_kamar,
+                id_karyawan:id_karyawan,
+                no_ktp:no_ktp,
+                no_hp:no_hp,
+                nama: nama,
+                harga: harga,
+                tanggal_masuk: tanggal_masuk,
+                tanggal_keluar:tanggal_keluar,
+                lama_menginap:lama_menginap
             },
-            success: function(data) {
-                $('#flasher').html(data)
+            success: function(data){
+                w = window.open("", "_self")
+                w.document.open()
+           
+                    w.document.write(data);
+                    w.document.close();
+              
+            
             }
         })
     }
-    // end ganti status kembalian kunci
+    //menghilangkan keterangan ktp ataupun field yang kosong
+    setInterval(function(){
+            setTimeout(function(){
+            $('#tempatktp2').remove()
+        },2000);
+    },4000)
+ //end transaksi
+
+
+ //riwayat transaksi
+        //detail untuk mengunjung
+    $(document).on('click','#pDetail',function(){
+       let id = $(this).val()
+       pDetail(id)
+    })
+    //ajax detail pengjung
+    function pDetail(id){
+        $.ajax({
+            url:"<?= BASEURL ?>transaksi/pDetail",
+            method: "post",
+            dataType: "text",
+            data:{
+                id:id
+            },
+            success:function(data){
+                $('#pModal').html(data)
+            }
+        })
+    }
+
+    //detail untuk kamar beserta status kunci
+    $(document).on('click','#kDetail',function(){
+        let id = $(this).val()
+        let kata = `<table class="table">
+                <thead>
+                    <th>no kamar</th>
+                    <th>jenis kamar</th>
+                    <th>kunci</th>
+                    <th>harga</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>dummy</td>
+                        <td>dummy</td>
+                        <td>    <select class="form-control" id="kunci" name="kunci">
+                            <option value="belum">belum</option>
+                            <option valuue="sudah">sudah</option>
+                 
+                            </select></td>
+                        <td>dummy</td>
+                    </tr>
+                </tbody>
+            </table>`;
+         
+            kDetail(id)
+    })
+
+    //ajax untuk kamar
+    function kDetail(id){
+        $.ajax({
+            url: "<?=BASEURL?>transaksi/kDetail",
+            dataType: "text",
+            method: 'post',
+            data: {
+                id:id
+            },
+            success:function(data){
+                $('#kModal').html(data);
+            }
+        })
+    }
+ //end riwayat transaksi
+
 </script>
 </body>
 

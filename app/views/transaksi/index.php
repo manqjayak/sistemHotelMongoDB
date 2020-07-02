@@ -21,7 +21,8 @@
                             <div class="form-header">
                                 <h1 class="text-center my-3">Check In</h1>
                             </div>
-                            <form method="POST" action="<?= BASEURL ?>transaksi/tambahTransaksi">
+                            <!-- <form method="POST" action="<?= BASEURL ?>transaksi/tambahTransaksi"> -->
+                            <form>
                                 <div class="form-group">
                                     <span class="form-label">No KTP</span>
                                     <div class="input-group mb-3">
@@ -43,19 +44,30 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <span class="form-label">Check In</span>
-                                            <input class="form-control" type="date" required="" name="tanggalmasuk">
+                                            <input class="form-control" type="date" required="" name="tanggalmasuk" id="tanggalmasuk">
 
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <span class="form-label">Check out</span>
-                                            <input class="form-control" type="date" required="" name="tanggalkeluar">
+                                            <input class="form-control" type="date" required="" name="tanggalkeluar" id="tanggalkeluar">
 
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div id="kamar">
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <span class="form-label">Lama Menginap</span>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" autocomplete='off' id="lamamenginap" name="lamamenginap" placeholder="lamamenginap" required="">
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-6">
                                         <div class="form-group">
                                             <span class="form-label">No Kamar</span>
@@ -69,14 +81,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <span class="form-label">Lama Menginap</span>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" autocomplete='off' id="lamamenginap" name="lamamenginap" placeholder="lamamenginap" required="">
-                                            </div>
-                                        </div>
-                                    </div>
+                                   
 
                                 </div>
                                 <div class="form-group">
@@ -86,7 +91,7 @@
                                     </div>
                                 </div>
                                 <div class="form-btn text-center">
-                                    <button type="submit" class="submit-btn">Next</button>
+                                    <button type="button" id="submit_transaksi" class="submit-btn">Submit</button>
                                 </div>
                             </form>
                         </div>

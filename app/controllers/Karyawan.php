@@ -34,7 +34,7 @@ class Karyawan extends Controller
 
     public function ubah()
     {
-
+        
         if ($this->model('Karyawan_model')->ubahKaryawan($_POST) > 0) {
             // return Flasher::setFlash('Berhasil', 'Diubah', 'success');
             $kata =  '  <div class="alert alert-success alert-dismissible fade show" role="alert">

@@ -1,0 +1,19 @@
+[{
+  "_id": "A0",
+  "nama": "agus",
+  "alamat": "jalan samping jalan",
+  "jk": "perempuan",
+  "no_hp": "08432354323"
+},{
+  "_id": "A1",
+  "nama": "adi",
+  "alamat": "jalan samping agus",
+  "jk": "laki-laki",
+  "no_hp": "08432354324"
+},{
+  "_id": "A03",
+  "nama": "idaq",
+  "alamat": "jalan jalan",
+  "jk": "laki-laki",
+  "no_hp": "081232543643"
+}]

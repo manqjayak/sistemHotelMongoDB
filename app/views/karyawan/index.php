@@ -39,8 +39,8 @@
             <tr>
                 <th>No</th>
                 <th>Nama </th>
-                <th>Alamat</th>
                 <th>Jenis Kelamin</th>
+                <th>Alamat</th>
                 <th>No HP</th>
 
                 <th>Opsi</th>
@@ -50,15 +50,15 @@
         <?php $no = 1; ?>
         <?php foreach ($data['karyawan'] as $karyawan) : ?>
 
-            <tbody id="b<?= $karyawan['id_karyawan'] ?>">
-                <tr id="t<?= $karyawan['id_karyawan'] ?>">
+            <tbody id="b<?= $karyawan['_id'] ?>">
+                <tr id="t<?= $karyawan['_id'] ?>">
                     <td> <?= $no ?></td>
-                    <td id='n<?= $karyawan['id_karyawan'] ?>'><?= $karyawan['nama'] ?></td>
-                    <td id='j<?= $karyawan['id_karyawan'] ?>'><?= $karyawan['jk'] ?></td>
-                    <td id='a<?= $karyawan['id_karyawan'] ?>'><?= $karyawan['alamat'] ?></td>
-                    <td id='hp<?= $karyawan['id_karyawan'] ?>'><?= $karyawan['no_hp'] ?></td>
-                    <td id='o<?= $karyawan['id_karyawan'] ?>'>
-                        <span id="editButtonKar" data-karyawan='<?= $karyawan['id_karyawan'] ?>' class="badge-warning w-25 px-2" style="cursor:pointer">Edit</span>
+                    <td id='n<?= $karyawan['_id'] ?>'><?= $karyawan['nama'] ?></td>
+                    <td id='j<?= $karyawan['_id'] ?>'><?= $karyawan['jk'] ?></td>
+                    <td id='a<?= $karyawan['_id'] ?>'><?= $karyawan['alamat'] ?></td>
+                    <td id='hp<?= $karyawan['_id'] ?>'><?= $karyawan['no_hp'] ?></td>
+                    <td id='o<?= $karyawan['_id'] ?>'>
+                        <span id="editButtonKar" data-karyawan='<?= $karyawan['_id'] ?>' class="badge-warning w-25 px-2" style="cursor:pointer">Edit</span>
                         <!-- <span class="badge-danger px-1" onclick="return confirm('Yakin?')"><a href="<?= BASEURL ?> karyawan/delete" style="color:white;">Hapus</a></span> -->
                     </td>
                 </tr>
@@ -95,7 +95,7 @@
                     <div class="form-group">
                         <label for="jeniskelamin">Jenis Kelamin</label>
                         <select class="form-control" id="jeniskelamin" name="jeniskelamin " required="">
-                            <option value="laki-laki">Laki-Laki</option>
+                            <option value="laki-laki" selected>Laki-Laki</option>
                             <option value="perempuan">Perempuan</option>
                         </select>
                     </div>
